@@ -1,9 +1,10 @@
 import './App.css'
+import Navbar from './components/NavBar'
 
 function App() {
 
   return (
-    <h1>Hello Deck of Card</h1>
+    <Navbar />
   )
 }
 
