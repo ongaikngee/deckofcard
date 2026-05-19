@@ -10,3 +10,14 @@ export const getNewDeck = async () => {
         throw error
     }
 }
+
+export const drawCardFromDeck = async (deckId, count = 1) => {
+    try {
+        const response = await fetch(`${BASE_URL}${deckId}/draw/?count=${count}`)
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error("Error drawing card from deck:", error)
+        throw error
+    }
+}
