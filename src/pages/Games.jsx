@@ -4,33 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { getNewDeck } from "../services/api";
 import NewGameBtn from "../components/NewGameBtn";
 
-export const Home = ({ games, setGames }) => {
+export const Games = ({ games, setGames }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  // const handleDrawCard = async () => {
-  //   if (!deckId) return
-
-  //   setLoading(true)
-  //   setError(null)
-
-  //   try {
-  //     const drawData = await drawCardFromDeck(deckId, 1)
-  //     if (!drawData.success) {
-  //       throw new Error('Failed to draw a card from the deck.')
-  //     }
-
-  //     const [drawnCard] = drawData.cards
-  //     setCard(drawnCard)
-  //     setRemaining(drawData.remaining)
-  //   } catch (err) {
-  //     console.error('Error drawing card:', err)
-  //     setError(err.message || 'Could not draw a card.')
-  //   } finally {
-  //     setLoading(false)
-  //   }
-  // }
 
   const addGame = async () => {
     try {
@@ -43,11 +20,12 @@ export const Home = ({ games, setGames }) => {
       setError("Failed to create a new game");
     }
   };
+
   const removeGame = (gameId) => {
     setGames((prevGames) => prevGames.filter((g) => g.gameId !== gameId));
   };
 
-  if (games.length === 0) {
+  if (!games || games.length === 0) {
     return (
       <div className="container">
         <h2>No Games Yet</h2>
@@ -96,27 +74,9 @@ export const Home = ({ games, setGames }) => {
             </div>
           ))}
         </div>
-        {/* </div> */}
       </div>
-
-      {/* <p>Deck ID: {deckId ?? "Loading..."}</p>
-      <button onClick={handleDrawCard} disabled={!deckId || loading}>
-        {loading ? "Drawing..." : "Draw a card"}
-      </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {card && (
-        <div className="card-draw-result">
-          <img
-            src={card.image}
-            alt={`${card.value} of ${card.suit}`}
-            width="150"
-          />
-          <p>
-            {card.value} of {card.suit}
-          </p>
-          <p>Remaining: {remaining}</p>
-        </div>
-      )} */}
     </>
   );
 };
+
+export default Games;
