@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getNewDeck, drawCardFromDeck } from "../services/api";
+import NewGameBtn from "../components/NewGameBtn";
 
 export const Home = () => {
   const [deckId, setDeckId] = useState(null);
@@ -66,10 +67,7 @@ export const Home = () => {
       <div className="container">
         <h2>No Games Yet</h2>
         <p>Start adding games and they will appear here.</p>
-
-        <button type="button" onClick={addGame} className="btn btn-primary">
-          New Game
-        </button>
+        <NewGameBtn addGame={addGame}/>
       </div>
     );
   }
@@ -77,9 +75,7 @@ export const Home = () => {
   return (
     <>
       <div className="container">
-        <button type="button" onClick={addGame} className="btn btn-primary">
-          New Game
-        </button>
+        <NewGameBtn addGame={addGame}/>
       </div>
       <div className="container my-5">
         <div className="row justify-content-start">
