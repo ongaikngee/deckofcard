@@ -1,30 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { getNewDeck, drawCardFromDeck } from "../services/api";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getNewDeck } from "../services/api";
 import NewGameBtn from "../components/NewGameBtn";
 
-export const Home = () => {
-  const [deckId, setDeckId] = useState(null);
-  // const [card, setCard] = useState(null);
-  // const [remaining, setRemaining] = useState(null);
+export const Home = ({ games, setGames }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const [games, setGames] = useState([]);
-
-  useEffect(() => {
-    // const fetchDeck = async () => {
-    //   try {
-    //     const deckData = await getNewDeck()
-    //     setDeckId(deckData.deck_id)
-    //     setRemaining(deckData.remaining)
-    //   } catch (error) {
-    //     console.error('Error fetching deck:', error)
-    //     setError('Could not create a new deck.')
-    //   }
-    // }
-    // fetchDeck()
-  }, []);
+  const navigate = useNavigate();
 
   // const handleDrawCard = async () => {
   //   if (!deckId) return
@@ -53,11 +36,12 @@ export const Home = () => {
     try {
       const deckData = await getNewDeck();
       setGames((prevGames) => [...prevGames, deckData.deck_id]);
+      navigate(`/game/${deckData.deck_id}`);
     } catch (err) {
       console.log(err);
+      setError("Failed to create a new game");
     }
   };
-
   const removeGame = (gameId) => {
     setGames((prevGames) => prevGames.filter((g) => g !== gameId));
   };
@@ -67,7 +51,7 @@ export const Home = () => {
       <div className="container">
         <h2>No Games Yet</h2>
         <p>Start adding games and they will appear here.</p>
-        <NewGameBtn addGame={addGame}/>
+        <NewGameBtn addGame={addGame} />
       </div>
     );
   }
@@ -75,13 +59,17 @@ export const Home = () => {
   return (
     <>
       <div className="container">
-        <NewGameBtn addGame={addGame}/>
+        <NewGameBtn addGame={addGame} />
       </div>
       <div className="container my-5">
         <div className="row justify-content-start">
           {games.map((game) => (
             <div key={game} className="col-12  col-sm-6 col-md-3">
-              <div className="card">
+              <div
+                className="card"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/game/${game}`)}
+              >
                 <img
                   src="https://deckofcardsapi.com/static/img/back.png"
                   className="card-img-top"
