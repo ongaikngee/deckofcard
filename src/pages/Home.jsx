@@ -65,11 +65,7 @@ export const Home = ({ games, setGames }) => {
         <div className="row justify-content-start">
           {games.map((game) => (
             <div key={game} className="col-12  col-sm-6 col-md-3">
-              <div
-                className="card"
-                style={{ cursor: "pointer" }}
-                onClick={() => navigate(`/game/${game}`)}
-              >
+              <div className="card">
                 <img
                   src="https://deckofcardsapi.com/static/img/back.png"
                   className="card-img-top"
@@ -77,12 +73,23 @@ export const Home = ({ games, setGames }) => {
                 ></img>
                 <div className="card-body">
                   <p className="card-title">{game}</p>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => removeGame(game)}
-                  >
-                    Delete
-                  </button>
+                  <div className="d-flex gap-2">
+                    <button
+                      className="btn btn-primary btn-sm flex-grow-1"
+                      onClick={() => navigate(`/game/${game}`)}
+                    >
+                      Play
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeGame(game);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
