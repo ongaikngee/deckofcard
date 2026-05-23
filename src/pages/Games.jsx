@@ -12,7 +12,9 @@ export const Games = ({ games, setGames }) => {
   const addGame = async () => {
     try {
       const deckData = await getNewDeck();
-      const newGame = { gameId: deckData.deck_id, drawn: [] };
+      const inputName = window.prompt("Enter a name for this game (optional):");
+      const name = inputName && inputName.trim() !== "" ? inputName.trim() : `Game ${deckData.deck_id.slice(0,6)}`;
+      const newGame = { gameId: deckData.deck_id, name, drawn: [] };
       setGames((prevGames) => [...prevGames, newGame]);
       navigate(`/game/${deckData.deck_id}`);
     } catch (err) {
@@ -51,7 +53,7 @@ export const Games = ({ games, setGames }) => {
                   alt="Game Image"
                 ></img>
                 <div className="card-body">
-                  <p className="card-title">{game.gameId}</p>
+                  <h3 className="card-title">{game.name || game.gameId}</h3>
                   <div className="d-flex gap-2">
                     <button
                       className="btn btn-primary btn-sm flex-grow-1"

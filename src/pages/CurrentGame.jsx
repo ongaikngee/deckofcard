@@ -75,6 +75,10 @@ export const CurrentGame = ({ games, setGames }) => {
     }
   };
 
+      const currentGame = games?.find((g) => g.gameId === deckId);
+      const gameName = currentGame?.name || deckId;
+      const gamesId = currentGame?.gameId
+
   if (!deckId) {
     return (
       <div className="container">
@@ -89,7 +93,10 @@ export const CurrentGame = ({ games, setGames }) => {
   return (
     <div className="container my-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Game: {deckId}</h2>
+        <div>
+        <h2 className="mb-0">{gameName}</h2>
+        <p className="text-secondary">ID: {gamesId}</p>
+        </div>
         <button className="btn btn-secondary" onClick={() => navigate("/")}>
           Back to Games
         </button>
