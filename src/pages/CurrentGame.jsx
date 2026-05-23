@@ -7,6 +7,7 @@ export const CurrentGame = ({ games, setGames }) => {
   const navigate = useNavigate();
   const [deckInfo, setDeckInfo] = useState(null);
   const [cards, setCards] = useState([]);
+  const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -32,8 +33,13 @@ export const CurrentGame = ({ games, setGames }) => {
   useEffect(() => {
     if (!deckId || !games) return;
     const existing = games.find((g) => g.gameId === deckId);
-    if (existing && Array.isArray(existing.drawn)) {
-      setCards(existing.drawn);
+    if (existing) {
+      if (Array.isArray(existing.drawn)) {
+        setCards(existing.drawn);
+      }
+      if (Array.isArray(existing.players)) {
+        setPlayers(existing.players);
+      }
     }
   }, [deckId, games]);
 
@@ -72,6 +78,23 @@ export const CurrentGame = ({ games, setGames }) => {
       console.error("Error drawing card:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAddPlayer = () => {
+    const name = window.prompt("Enter player name:");
+    if (!name) return;
+
+    const newPlayer = { id: Date.now().toString(), name };
+    setPlayers((prev) => {
+      const next = [...prev, newPlayer];
+      return next;
+    });
+
+    if (setGames) {
+      setGames((prevGames) =>
+        prevGames.map((g) => (g.gameId === deckId ? { ...g, players: [...(g.players || []), newPlayer] } : g))
+      );
     }
   };
 
@@ -120,6 +143,27 @@ export const CurrentGame = ({ games, setGames }) => {
           </div>
         </div>
       )}
+
+      <div className="mb-4">
+        <div className="d-flex justify-content-between align-items-center mb-2">
+          <h5>Players</h5>
+          <button className="btn btn-sm btn-success" onClick={handleAddPlayer}>
+            Add Player
+          </button>
+        </div>
+
+        {players && players.length > 0 ? (
+          <ul className="list-group">
+            {players.map((p) => (
+              <li key={p.id} className="list-group-item">
+                {p.name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-muted">No players yet. Add one to start.</p>
+        )}
+      </div>
 
       {cards.length > 0 && (
         <div className="mt-4">
