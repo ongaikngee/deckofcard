@@ -1,0 +1,15 @@
+/* Fade-in animation used for deck info when it becomes available */
+.fade-in {
+	animation: fadeIn 360ms ease-in-out both;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
