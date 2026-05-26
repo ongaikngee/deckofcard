@@ -15,7 +15,7 @@ export const Games = ({ games, setGames }) => {
       const inputName = window.prompt("Enter a name for this game (optional):");
       // If the user cancels the prompt (clicks Cancel), do not create a new game
       if (inputName === null) return;
-      const name = inputName.trim() !== "" ? inputName.trim() : `Game ${deckData.deck_id.slice(0,6)}`;
+      const name = inputName.trim() !== "" ? inputName.trim() : `Game ${deckData.deck_id.slice(0, 6)}`;
       const newGame = { gameId: deckData.deck_id, name, drawn: [] };
       setGames((prevGames) => [...prevGames, newGame]);
       navigate(`/game/${deckData.deck_id}`);
@@ -44,40 +44,45 @@ export const Games = ({ games, setGames }) => {
       <div className="container">
         <NewGameBtn addGame={addGame} />
       </div>
-      <div className="container my-5">
-        <div className="row justify-content-start">
-          {games.map((game) => (
-            <div key={game.gameId} className="col-12  col-sm-6 col-md-3">
-              <div className="card">
-                <img
+      <div className="container">
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Game</th>
+              <th scope="col">Name</th>
+              <th scope="col">Play</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody className="table-group-divider">
+            {games.map((game, index) => (
+              <tr classname="col_id" key={game.gameId}>
+                <th scope="row"><img
+                  style={{ width: "120px" }}
                   src="https://deckofcardsapi.com/static/img/back.png"
                   className="card-img-top"
                   alt="Game Image"
-                ></img>
-                <div className="card-body">
-                  <h3 className="card-title">{game.name || game.gameId}</h3>
-                  <div className="d-flex gap-2">
-                    <button
-                      className="btn btn-primary btn-sm flex-grow-1"
-                      onClick={() => navigate(`/game/${game.gameId}`)}
-                    >
-                      Play
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeGame(game.gameId);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+                ></img></th>
+                <td>{game.name || game.gameId}</td>
+                <td><button
+                  className="btn btn-primary btn-sm flex-grow-1"
+                  onClick={() => navigate(`/game/${game.gameId}`)}
+                >
+                  Play
+                </button></td>
+                <td><button
+                  className="btn btn-danger btn-sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeGame(game.gameId);
+                  }}
+                >
+                  Delete
+                </button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
