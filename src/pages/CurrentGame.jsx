@@ -120,7 +120,7 @@ export const CurrentGame = ({ games, setGames }) => {
               </div>
             </div>
           ) : deckInfo ? (
-            <>
+            <div className="fade-in">
               <p>
                 <strong>Deck ID:</strong> {deckInfo.deck_id}
               </p>
@@ -130,7 +130,7 @@ export const CurrentGame = ({ games, setGames }) => {
               <p>
                 <strong>Shuffled:</strong> {deckInfo.shuffled ? "Yes" : "No"}
               </p>
-            </>
+            </div>
           ) : (
             <p className="text-muted">Deck information will appear here.</p>
           )}
