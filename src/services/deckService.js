@@ -1,8 +1,9 @@
 const BASE_URL = "https://deckofcardsapi.com/api/deck/"
 
-export const getNewDeck = async (count = 1) => {
+export const getNewDeck = async ({noOfDecks = 1}) => {
     try {
-        const response = await fetch(`${BASE_URL}new/shuffle/?deck_count=${count}`)
+        console.log("Fetching new deck with count:", noOfDecks); // Debug log to confirm function is called and count value
+        const response = await fetch(`${BASE_URL}new/shuffle/?deck_count=${noOfDecks}`)
         const data = await response.json()
         data.timestamp = new Date().toISOString();
         return data

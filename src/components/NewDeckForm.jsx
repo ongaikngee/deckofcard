@@ -3,7 +3,7 @@ import {useState} from 'react'
 
 export const NewDeckForm = ({ addGame }) => {
 	const [inputName, setName] = useState("");
-	const [inputDeckNumber, setDeckNumber] = useState(1);
+	const [inputNoOfDecks, setDeckNumber] = useState(1);
 
 	return (
 		<>
@@ -39,7 +39,7 @@ export const NewDeckForm = ({ addGame }) => {
 									className="form-control"
 									id="deckNumber"
 									min="1"
-									value={inputDeckNumber}
+									value={inputNoOfDecks}
 									onChange={(e) => setDeckNumber(parseInt(e.target.value) || 1)}
 								/>
 							</div>
@@ -49,7 +49,7 @@ export const NewDeckForm = ({ addGame }) => {
 							<button type="button"
 								onClick={(e) => {
 									e.currentTarget.blur(); // Remove focus from the button after click
-									addGame({inputName: inputName, inputDeckNumber: inputDeckNumber});
+									addGame({inputName: inputName, inputNoOfDecks: inputNoOfDecks});
 								}} className="btn btn-primary"
 								data-bs-dismiss="modal">Save changes</button>
 						</div>
