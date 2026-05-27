@@ -1,9 +1,10 @@
 import React from 'react'
-import {useState} from 'react'
+import { useState } from 'react'
 
 export const NewDeckForm = ({ addGame }) => {
 	const [inputName, setName] = useState("");
 	const [inputNoOfDecks, setDeckNumber] = useState(1);
+	const [inputJokersEnabled, setJokersEnabled] = useState(false);
 
 	return (
 		<>
@@ -43,15 +44,24 @@ export const NewDeckForm = ({ addGame }) => {
 									onChange={(e) => setDeckNumber(parseInt(e.target.value) || 1)}
 								/>
 							</div>
-						</div>
-						<div className="modal-footer">
-							<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<button type="button"
-								onClick={(e) => {
-									e.currentTarget.blur(); // Remove focus from the button after click
-									addGame({inputName: inputName, inputNoOfDecks: inputNoOfDecks});
-								}} className="btn btn-primary"
-								data-bs-dismiss="modal">Save changes</button>
+							{/* <div className="mb-3">
+								<label htmlFor="jokerEnabled" className="form-label">Number of Decks</label> */}
+							<div className="mb-3 form-check">
+								<input className="form-check-input" type="checkbox" id="flexCheckChecked" checked={inputJokersEnabled} onChange={(e) => setJokersEnabled(e.target.checked)} />
+								<label className="form-check-label" htmlFor="flexCheckChecked">
+									Required Jokers? (2 per deck)
+								</label>
+								{/* </div> */}
+							</div>
+							<div className="modal-footer">
+								<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="button"
+									onClick={(e) => {
+										e.currentTarget.blur(); // Remove focus from the button after click
+										addGame({ inputName: inputName, inputNoOfDecks: inputNoOfDecks, inputJokersEnabled: inputJokersEnabled });
+									}} className="btn btn-primary"
+									data-bs-dismiss="modal">Play Now!</button>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -14,9 +14,9 @@ export const Games = ({ games, setGames }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const addGame = async ({inputName, inputNoOfDecks}) => {
+  const addGame = async ({inputName, inputNoOfDecks, inputJokersEnabled}) => {
     try {
-      const deckData = await getNewDeck({noOfDecks: inputNoOfDecks});
+      const deckData = await getNewDeck({noOfDecks: inputNoOfDecks, jokersEnabled: inputJokersEnabled});
       const name = inputName.trim() !== "" ? inputName.trim() : `Game ${deckData.deck_id.slice(0, 6)}`;
       const newGame = {
         gameId: deckData.deck_id,
