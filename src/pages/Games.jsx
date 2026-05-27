@@ -1,8 +1,12 @@
 import React from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getNewDeck } from "../services/deckService";
 import NewGameBtn from "../components/NewGameBtn";
+
+dayjs.extend(relativeTime);
 
 export const Games = ({ games, setGames }) => {
   const [loading, setLoading] = useState(false);
@@ -11,12 +15,16 @@ export const Games = ({ games, setGames }) => {
 
   const addGame = async () => {
     try {
-      const deckData = await getNewDeck();
       const inputName = window.prompt("Enter a name for this game (optional):");
       // If the user cancels the prompt (clicks Cancel), do not create a new game
       if (inputName === null) return;
+      const deckData = await getNewDeck();
       const name = inputName.trim() !== "" ? inputName.trim() : `Game ${deckData.deck_id.slice(0, 6)}`;
-      const newGame = { gameId: deckData.deck_id, name, drawn: [] };
+      const newGame = {
+        gameId: deckData.deck_id,
+        name, drawn: [],
+        timestamp: deckData.timestamp
+      };
       setGames((prevGames) => [...prevGames, newGame]);
       navigate(`/game/${deckData.deck_id}`);
     } catch (err) {
@@ -50,6 +58,7 @@ export const Games = ({ games, setGames }) => {
             <tr>
               <th scope="col">Game</th>
               <th scope="col">Name</th>
+              <th scope="col">Started on</th>
               <th scope="col">Play</th>
               <th scope="col">Delete</th>
             </tr>
@@ -64,6 +73,8 @@ export const Games = ({ games, setGames }) => {
                   alt="Game Image"
                 ></img></th>
                 <td>{game.name || game.gameId}</td>
+                {/* <td>{game.timestamp}</td> */}
+                <td>{game.timestamp ? dayjs(game.timestamp).fromNow() : "N/A"}</td>
                 <td><button
                   className="btn btn-primary btn-sm flex-grow-1"
                   onClick={() => navigate(`/game/${game.gameId}`)}

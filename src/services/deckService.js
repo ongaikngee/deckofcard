@@ -4,6 +4,7 @@ export const getNewDeck = async (count = 1) => {
     try {
         const response = await fetch(`${BASE_URL}new/shuffle/?deck_count=${count}`)
         const data = await response.json()
+        data.timestamp = new Date().toISOString();
         return data
     } catch (error) {
         console.error("Error fetching new deck:", error)
