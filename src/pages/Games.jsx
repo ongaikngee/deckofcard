@@ -4,7 +4,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getNewDeck } from "../services/deckService";
-// import { NewDeckForm } from "../components/NewDeckForm";
 import NewDeckForm from "../components/NewDeckForm";
 
 dayjs.extend(relativeTime);
@@ -69,7 +68,7 @@ export const Games = ({ games, setGames }) => {
               <th className="d-none d-md-table-cell">Delete</th>
 
               {/* Mobile */}
-              <th class="d-table-cell d-md-none">Name</th>
+              <th className="d-table-cell d-md-none">Name</th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
