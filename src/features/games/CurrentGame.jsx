@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { drawCardFromDeck } from "../../services/deckService";
+import { CARD_OVERLAP_SPACING } from "../../constants/games";
 
 export const CurrentGame = ({ games, setGames }) => {
   const { deckId } = useParams();
@@ -13,9 +14,7 @@ export const CurrentGame = ({ games, setGames }) => {
   const cardsContainerRef = useRef(null);
   const firstCardRef = useRef(null);
   const [overlap, setOverlap] = useState(0);
-  // Minimum visible portion (in pixels) of each card when overlapping.
-  // Change this value to increase/decrease how much of each card remains visible.
-  const CARD_OVERLAP_SPACING = 19; // px — configurable: try 10, 15, 20
+ 
 
   useEffect(() => {
     // Fetch initial deck information and set up the page
