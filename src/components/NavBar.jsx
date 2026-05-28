@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import {UsersIcon, PersonArmsSpreadIcon} from "@phosphor-icons/react";
+
 function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -38,7 +40,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/user">
-                User
+                <PersonArmsSpreadIcon size={24} />
               </Link>
             </li>
           </ul>
